@@ -1,0 +1,27 @@
+# UNCONFIGURED FSTAB FOR BASE SYSTEM
+
+172.20.0.1:/srv/nfs/main-root	/	nfs	defaults	0	1
+
+
+cgroup		/sys/fs/cgroup	cgroup	defaults	0	0
+
+/dev/xvdb2	/mount/b2	ext4	nodev,nosuid	0	2
+/dev/xvdb3	/mount/b3	ext4	nodev,nosuid	0	2
+/dev/vg-sdc-2047g/lvol0	/mount/c	ext4	nodev,nosuid	0	2
+/dev/vg-sdd-2047g/lvol0	/mount/d	ext4	nodev,nosuid	0	2
+/dev/vg-sde-2047g/lvol0	/mount/e	ext4	nodev,nosuid	0	2
+/dev/vg-sdf-913g/lvol0	/mount/f	ext4	nodev,nosuid	0	2
+UUID=f4492d70-7c0b-48cc-941a-702cfca200f7 /mount/array	xfs	inode64,noatime,_netdev	0	2
+
+/mount/b2	/home		none	bind		0	0
+/mount/b3	/var/log	none	bind		0	0
+
+/mount/d/ftp-push	/srv/ftp-push	none	bind	0	0
+
+/dev/vg-xvda2-730g/ftp-push	/var/lib/lxc/ftp-push/rootfs	ext4	defaults	0	2
+/dev/vg-xvda2-730g/ftpd		/var/lib/lxc/ftpd/rootfs	ext4	defaults	0	2
+/dev/vg-xvda2-730g/lab		/var/lib/lxc/lab/rootfs		ext4	defaults	0	2
+/dev/vg-xvda2-730g/nginx	/var/lib/lxc/nginx/rootfs	ext4	defaults	0	2
+/dev/vg-xvda2-730g/rsyncd	/var/lib/lxc/rsyncd/rootfs	ext4	defaults	0	2
+/dev/vg-xvda2-730g/sync		/var/lib/lxc/sync/rootfs	ext4	defaults	0	2
+/dev/vg-xvda2-730g/web		/var/lib/lxc/web/rootfs		ext4	defaults	0	2

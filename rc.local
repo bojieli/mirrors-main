@@ -1,0 +1,72 @@
+#!/bin/bash
+## init script of mirrors-main
+## The following lines should be added in /etc/rc.local
+##   prefix=/opt/ustclug/mirrors-main
+##   [[ -x $prefix/rc.local ]] && $prefix/rc.local
+
+ip route add default via 202.38.95.126   table 1000
+ip route add default via 202.141.160.126 table 1001
+ip route add default via 202.141.176.126 table 1002
+ip -6 route add default via 2001:da8:d800:95::1 table 1000
+
+#ip rule add from all lookup local        pref 200
+#ip rule del from all lookup local        pref 0
+#ip rule add from all fwmark 86 lookup 86 pref 100
+#ip rule add from all fwmark 87 lookup 87 pref 101
+#ip rule add from all fwmark 88 lookup 88 pref 102
+
+#ip -6 rule add from all lookup local        pref 200
+#ip -6 rule del from all lookup local	    pref 0
+#ip -6 rule add from all fwmark 86 lookup 86 pref 100
+#ip -6 rule add from all fwmark 87 lookup 87 pref 101
+#ip -6 rule add from all fwmark 88 lookup 88 pref 102
+
+#ip rule add from 202.38.95.110   fwmark 87 lookup 1000 pref 1000
+#ip rule add from 202.141.160.110 fwmark 87 lookup 1001 pref 1001
+#ip rule add from 202.141.176.110 fwmark 87 lookup 1002 pref 1002
+
+ip rule add from 202.38.95.110   table 1000 pref 1003
+ip rule add from 202.141.160.110 table 1001 pref 1004
+ip rule add from 202.141.176.110 table 1002 pref 1005
+ip -6 rule add from 2001:da8:d800:95::110 table 1000
+
+#ip addr add 10.86.1.1/24 broadcast 10.86.1.255 dev br-lxc-in
+#ip addr add 10.86.2.1/24 broadcast 10.86.2.255 dev br-lxc-in
+#ip rule add from 10.86.0.1 table 1000 pref 2000
+#ip rule add from 10.86.1.1 table 1001 pref 2001
+#ip rule add from 10.86.2.1 table 1002 pref 2002
+#ip -6 rule add from fec0::10:86/96 table 1000 pref 2000
+
+ip addr add 10.86.1.0/24 broadcast 10.86.1.255 dev br-lxc-in
+ip addr add 10.86.2.0/24 broadcast 10.86.2.255 dev br-lxc-in
+ip rule add from 10.86.0.0/24 table 1000 pref 2000
+ip rule add from 10.86.1.0/24 table 1001 pref 2001
+ip rule add from 10.86.2.0/24 table 1002 pref 2002
+ip -6 rule add from fec0::10:86/96 table 1000 pref 2000
+
+ip route flush cache
+
+iptables-restore < /etc/iptables/rules.v4
+
+sysctl -p
+
+/root/start-lxc.sh nginx
+/root/start-lxc.sh ftpd
+/root/start-lxc.sh rsyncd
+/root/start-lxc.sh ftp-push
+/root/start-lxc.sh web
+/root/start-lxc.sh lab
+/root/start-lxc.sh sync
+
+#ipvsadm -A -t 202.38.95.110:22 -s rr
+#ipvsadm -a -t 202.38.95.110:22 -r 10.87.0.2:22 -m
+#
+#ipvsadm -A -t 202.38.95.110:80 -s rr
+#ipvsadm -a -t 202.38.95.110:80 -r 10.87.0.2:80 -m
+#ipvsadm -A -t 202.141.160.110:80 -s rr
+#ipvsadm -a -t 202.141.160.110:80 -r 10.87.1.2:80 -m
+#ipvsadm -A -t 202.141.176.110:80 -s rr
+#ipvsadm -a -t 202.141.176.110:80 -r 10.87.2.2:80 -m
+#ipvsadm -A -t [2001:da8:d800:95::110]:80 -s rr
+#ipvsadm -a -t [2001:da8:d800:95::110]:80 -r [fec0::10:87:0:2]:80 -m
+
