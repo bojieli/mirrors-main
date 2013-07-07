@@ -1,8 +1,5 @@
 #!/bin/bash
-## init script of mirrors-main
-## The following lines should be added in /etc/rc.local
-##   prefix=/opt/ustclug/mirrors-main
-##   [[ -x $prefix/rc.local ]] && $prefix/rc.local
+## init script for mirrors-main
 
 ip route add default via 202.38.95.126   table 1000
 ip route add default via 202.141.160.126 table 1001
@@ -70,3 +67,4 @@ sysctl -p
 #ipvsadm -A -t [2001:da8:d800:95::110]:80 -s rr
 #ipvsadm -a -t [2001:da8:d800:95::110]:80 -r [fec0::10:87:0:2]:80 -m
 
+exit 0
