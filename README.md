@@ -23,24 +23,31 @@ Except for emergent cases, changes should be made on your own machine, pushed to
 
 If you are not sure of your changes, please test it on your own machine before committing.
 
-## LXC Daily Management
+# LXC
 
-List LXC:
+## List LXC
 ```lxc-list```
 
-Start LXC:
+## LXC console
+
+In host machine:
+```lxc-console -n <container-name>```
+
+To detach from LXC console, type ```Ctrl+A Q```
+
+If the LXC is created with our script, it should be able to login with ```root``` without password.
+
+## Start LXC
 ```./start-lxc.sh <container-name>```
 
 Please always use ```start-lxc.sh``` to start containers. If you wish to do something else, write it in the script.
 
-Stop LXC:
+## Stop LXC
 ```lxc-stop -n <container-name>```
 
-Most changes to LXC config file need restarting (stop, then start) LXC to take effect.
+Most changes to LXC config file require restarting (stop, then start) LXC to take effect.
 
-## LXC Advanced Management
-
-Create a new LXC:
+## Create a new LXC
 ```./create-lxc.sh <container-name> <root-partition-size>```
 
 Please following the instructions on the screen.
@@ -50,7 +57,7 @@ After installation, the script will fix config file, fstab and tty files, and cl
 Manually create LXC:
 ```lxc-create -n <container-name> -t debian -B lvm --lvname <logical-volume-name> --vgname vg-xvda2-730g --fstype ext4 --fssize <root-partition-size>```
 
-Destroy LXC:
+## Destroy LXC
 ```lxc-destroy -n <container-name>```
 
 WARNING: Destroy is permanent and not recoverable.
