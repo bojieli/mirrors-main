@@ -40,11 +40,15 @@ Most changes to LXC config file need restarting (stop, then start) LXC to take e
 
 ## LXC Advanced Management
 
-Create LXC:
-```lxc-create -n <container-name> -t debian -B lvm --lvname <logical-volume-name> --vgname vg-xvda2-730g --fstype ext4 --fssize <root-partition-size>```
+Create a new LXC:
+```./create-lxc.sh <container-name> <root-partition-size>```
 
-For example:
-```lxc-create -n rsync-push -t debian -B lvm --lvname rsync-push --vgname vg-xvda2-730g --fstype ext4 --fssize 5G```
+Please following the instructions on the screen.
+
+After installation, the script will fix config file, fstab and tty files, and clear root password.
+
+Manually create LXC:
+```lxc-create -n <container-name> -t debian -B lvm --lvname <logical-volume-name> --vgname vg-xvda2-730g --fstype ext4 --fssize <root-partition-size>```
 
 Destroy LXC:
 ```lxc-destroy -n <container-name>```
