@@ -47,6 +47,9 @@ iptables-restore < /etc/iptables/rules.v4
 
 sysctl -p
 
+# http://gitlab.lug.ustc.edu.cn/boj/smartproxy
+/opt/ustclug/smartproxy/server-rules
+
 /root/start-lxc.sh nginx
 /root/start-lxc.sh ftpd
 /root/start-lxc.sh rsyncd
