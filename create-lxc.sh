@@ -24,6 +24,17 @@ lxc-create -n $container -t debian -B lvm --lvname $container --vgname vg-xvda2-
 echo "/dev/vg-xvda2-730g/$container		/var/lib/lxc/$container/rootfs		ext4	defaults	0	2" >> fstab
 mount -a
 
+# fix directory level
+pushd /var/lib/lxc/$container/rootfs
+for d in `ls --color=none`; do
+    if [ "$d" == "lost+found" ]; then
+        continue
+    fi
+    mv $d/* .
+    rm -r $d
+done
+popd
+
 # generate config file
 sed "s/%container%/$container/g" <$TEMPLATE_CONF >$LXC_ROOT/$container/config
 
