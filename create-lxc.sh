@@ -16,6 +16,10 @@ fi
 
 # should be run in current directory
 cd `dirname $0`
+if [ ! -f "$TEMPLATE_CONF" ]; then
+    echo "Repository corrupted"
+    exit 1
+fi
 
 container=$1
 fssize=$2
@@ -36,7 +40,8 @@ done
 popd
 
 # generate config file
-sed "s/%container%/$container/g" <$TEMPLATE_CONF >$LXC_ROOT/$container/config
+sed "s/%container%/$container/g" <$TEMPLATE_CONF >lxc/container
+ln -s `pwd`/lxc/$container $LXC_ROOT/$container/config
 
 # fix tty
 for i in {1..6}; do
