@@ -43,5 +43,8 @@ for i in {1..6}; do
     touch $LXC_ROOT/$container/rootfs/dev/tty$i
 done
 
+# create log directory
+mkdir -p /var/log/lxc-bind/$container
+
 # clear root password
 chroot $LXC_ROOT/$container/rootfs passwd -d root
