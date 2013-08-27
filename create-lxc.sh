@@ -46,5 +46,9 @@ done
 # create log directory
 mkdir -p /var/log/lxc-bind/$container
 
+# create mount points
+mkdir -p $LXC_ROOT/$container/rootfs/mount/{array,c,d,e,f}
+mkdir -p $LXC_ROOT/$container/rootfs/srv/ftp-push
+
 # clear root password
 chroot $LXC_ROOT/$container/rootfs passwd -d root
